@@ -1,0 +1,102 @@
+
+
+//Tipos de Dados Numéricos
+INT: Números inteiros.
+Ex; 1, 8, -10, 1000
+
+//BIGNT: Números inteiros Maiores.
+Ex: 1000000, -987426838, 9645634784453553
+
+//VARCHAR: Qualquer caracterios, tem que Definir um LIMITE
+EX: Nome VARCHAR(100) o nome pode ter até 100 caracterios!! 
+
+//IGNORE INTO: Para não dar erro, quando eu for colocar outro valor dentro de uma TABELA já criada, ele evita que eu duplique o mesmo valor. 
+
+
+// MODELO
+-- CRIA O BANCO DE DADOS Loja_Tevinho SE NÃO EXISTIR
+CREATE DATABASE IF NOT EXISTS Loja_Tevinho;
+
+-- USE O BANCO DE DADOS Loja_Tevinho PARA OS COMANDOS ABAIXOS
+USE Loja_Tevinho;
+
+--  CRIE A TABELA clintes SE ELA JÁ NÃO EXISTIR
+    CREATE TABLE IF NOT EXISTS CLIENTE (
+    ID_Cliente INT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Email VARCHAR(100)
+    );
+--  CRIE A TABELA clintes SE ELA JÁ NÃO EXISTIR
+    CREATE TABLE IF NOT EXISTS PEDIDOS(
+        ID_Pedido INT PRIMARY KEY,
+        Descricao VARCHAR(200),
+        Valor DECIMAL(10, 2),
+        ID_Cliente INT,
+        FOREIGN KEY(ID_Cliente) REFERENCES Clientes(ID_Cliente)
+        );
+
+-- INSERINDO VALORES NA TABELA Clientes COM INSERT IGNORE INTO 
+-- INSIRA ESSES VALORES NA TABELA, MAS IGNORE VALORES QUE JÁ EXISTEM 
+INSERT IGNORE INTO Clientes(ID_cliente, Nome,Email) VALUES
+(1, ' Stevão Rodrigues', 'stevao@gmail.com'),
+(2, 'Lucas FLorão', 'lucas@gmil.com'),
+(3, 'Matheus Mattos', 'matheus@gmail.com'),
+(4, 'Pedro Henrique', 'pedro@gmail.com');
+
+-- INSERINDO VALORES NA TABELA Pedidos COM INSERT IGNORE INTO
+-- INSIRA ESSES VALORES NA TABELA, MAS IGNORE VALORES QUE JÁ EXISTEM 
+INSERT IGNORE INTO Pedidos(ID_Pedido, Descricao, Valor, ID_Cliente) VALUE
+(101, 'Compra de Móveis', '1500,00', 1),
+(102, 'Pedido de Eletrônicos', '2500,00', 2),
+(103, 'Serviços de Instalações', '500,75',3),
+(104, 'Iphone 13 Pro', '7000,00', 4);
+
+
+
+--  CRIE A TABELA clintes SE ELA JÁ NÃO EXISTIR
+    CREATE TABLE IF NOT EXISTS Produtos (
+    ID_Produto INT PRIMARY KEY,
+    Nome_Do_Produto VARCHAR(100),
+    preco_Unitario REAL(100)
+    );
+
+--  CRIE A TABELA clintes SE ELA JÁ NÃO EXISTIR
+    CREATE TABLE IF NOT EXISTS Itens (
+    ID_Item INT PRIMARY KEY,
+    ID_Pedido INT,
+    FOREIGN KEY(ID_Pedido) REFERENCES Pedidos(ID_Pedido),
+    ID_Produto INT,
+    FOREIGN KEY(ID_Produto) REFERENCES Produtos(ID_Produto),
+    Quantidade int,
+    Preco_unitario varchar(10000)
+);
+
+--  CRIE A TABELA clintes SE ELA JÁ NÃO EXISTIR
+    CREATE TABLE IF NOT EXISTS Pagamentos (
+    ID_Pagamento INT PRIMARY KEY,
+    Pagamento int,
+    Metodo_Do_Pagamento VARCHAR (50),
+    Valor_Do_Pagamento Real,
+    Data_De_Pagamanto DATE
+);
+
+
+// Ferramentas Para Mudar ou Atualizar as Tabelas:
+
+-- Alterar o nome de uma tabela: RENAME TABLE nome_antigo TO nome_novo;
+
+RENAME TABLE clientes TO lojaClientes;
+
+-- Alterar o nome de uma coluna: ALTER TABLE nome_da_tabela CHANGE nome_antigo nome_novo tipo_da_coluna;
+
+ALTER TABLE lojaClientes CHANGE Nome Nomes VARCHAR(100);
+
+-- Inserir mais colunas em uma tabela: ALTER TABLE nome_da_tabela ADD COLUMN nome_da_coluna tipo_da_coluna;
+
+ALTER TABLE clientes ADD COLUMN Telefone VARCHAR(15);
+
+-- Inserir valores nas novas colunas criadas: UPDATE nome_da_tabela SET nome_da_coluna = valor WHERE condicao;
+
+UPDATE Clientes SET Telefone = 5199999999 WHERE id_cliente = 1;
+
+
