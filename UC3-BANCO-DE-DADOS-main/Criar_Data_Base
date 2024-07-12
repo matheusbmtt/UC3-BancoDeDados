@@ -99,4 +99,88 @@ ALTER TABLE clientes ADD COLUMN Telefone VARCHAR(15);
 
 UPDATE Clientes SET Telefone = 5199999999 WHERE id_cliente = 1;
 
+===============================================//=========================================================
+CRIAR A TABELA:
+CREATE TABLE clientes (
+    -- coluna / tipo de dado / restrição
+    idClientes INT PRIMARY KEY,
+    nome VARCHAR (100),
+    telefone VARCHAR(100)
+    );
+===============================================//=========================================================
+ADICIONAR COLUNA A TABELA:
+ALTER TABLE clientes
+ADD email VARCHAR(100);
+===============================================//=========================================================
+MODIFICAR A COLUNA DA TABELA:
+ALTER TABLE clientes
+MODIFY email TEXT;
+===============================================//=========================================================
+MUDAR O NOME DA COLUNA NA TABELA:
+ALTER TABLE clientes
+CHANGE COLUMN email emailCliente VARCHAR(255);
+===============================================//=========================================================
+REMOVER COLUNA NA TABELA:
+ALTER TABLE clientes
+DROP COLUMN telefone VARCHAR(100);
+===============================================//=========================================================
+DELETAR UMA TABELA:
+DROP TABLE clientes;
+===============================================//=========================================================
+COMO INSERIR DADOS NA TABELA:
+INSERT INTO clientes (idClientes, nome, emailClientes)
+VALUES (1, 'João Silva', 'joao.silva@email.com');
+===============================================//=========================================================
+COMO ATUALIZAR DADOS DA TABELA
+UPDATE clientes
+SET emailCliente = 'novo.email@email.com'
+WHERE idClientes = 1; -- condição
+===============================================//=========================================================
+COMO DELETAR DADOS NA TABELA
+DELETE FROM clientes
+WHERE idClientes = 1
+===============================================//=========================================================
+CONSULTA SIMPLES: RETORNA TODOS OS DADOS DA TABELA:
+SELECT idClientes, nome, emailCliente
+FROM clientes;
+
+SELECT *
+FROM clientes;
+===============================================//=========================================================
+SELECT * FROM clientes;
+===============================================//=========================================================
+SELECT emailCliente
+FROM clientes
+WHERE idClientes = 3;
+===============================================//=========================================================
+SELECT emailCliente FROM clientes WHERE idClientes IN  (3, 4, 5);
+===============================================//=========================================================
+CONSULTA COM ORDENAÇÃO: RETORNA DADOS ORDENADOS:
+SELECT idClientes, nome, emailCliente
+FROM clientes
+ORDER BY nome ASC; -- OU DESC
+===============================================//=========================================================
+CONSULTA COM FILTRO E COM ORDENAÇÃO: RETORNA DADOS ORDENADOS E COM BASE EM UMA CONDIÇÃO
+SELECT nome
+FROM clientes
+WHERE emailCliente = 'joao.silva@email.com'
+ORDER BY idClientes DESC;
+===============================================//=========================================================
+CONSULTA COM LIMITE DE RESULTADOS:
+SELECT idClientes, nome, emailCliente
+FROM clientes
+LIMIT 3;
+===============================================//=========================================================
+CONSULTA DE VALORES ÚNICOS:
+SELECT DISTINCT emailCliente
+FROM clientes;
+===============================================//=========================================================
+CREATE TABLE pedidos (
+idPedido INT AUTO_INCREMENT PRIMARY KEY,
+idCliente INT,
+numeroPedido VARCHAR(50),
+valorTotal DECIMAL(10, 2),
+dataPedido DATE,
+FOREIGN KEY (idClientes) REFERENCES clientes(idClientes)
+);
 
