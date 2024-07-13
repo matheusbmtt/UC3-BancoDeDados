@@ -183,4 +183,55 @@ valorTotal DECIMAL(10, 2),
 dataPedido DATE,
 FOREIGN KEY (idClientes) REFERENCES clientes(idClientes)
 );
-
+===============================================//=========================================================
+INSERT INTO pedidos (idCliente, numeroPedido, valorTotal, dataPedido)
+VALUES (1, 'PED-001', 150.00, '2024-07-12'),
+       (2, 'PED-002', 250.00, '2024-07-12'),
+       (1, 'PED-003', 180.00, '2024-07-13');
+===============================================//=========================================================
+SELECT SUM (valorTotal) AS valor_total_pedidos
+FROM pedidos;
+===============================================//=========================================================
+SELECT AVG (valorTotal) AS valor_medio_pedidos
+FROM pedidos;
+===============================================//=========================================================
+SELECT MAX(numeroPedido) AS pedido_com_numero_mais_alto
+FROM pedidos;
+===============================================//=========================================================
+SELECT MIN(numeroPedido) AS pedido_com_numero_mais_baixo
+FROM pedidos;
+===============================================//=========================================================
+SELECT clientes.idClientes, clientes.nome, clientes.emailCliente, pedidos.numeroPedido
+FROM clientes
+INNER JOIN pedidos ON clientes.idClientes = pedidos.idClientes;
+===============================================//=========================================================
+SELECT clientes.idClientes, clientes.nome, pedidos.numeroPedido
+FROM clientes
+LEFT JOIN pedidos ON clientes.idClientes = pedidos.idClientes;
+===============================================//=========================================================
+SELECT clientes.idClientes, clientes.nome, pedidos.numeroPedido
+FROM clientes
+LEFT JOIN pedidos ON clientes.idClientes = pedidos.idClientes;
+===============================================//=========================================================
+SELECT clientes.idClientes, cliente.nome, pedidos.numeroPedido, pedidos.valorTotal
+FROM clientes
+INNER JOIN pedidos ON clientes.idClientes = pedidos.idClientes
+WHERE pedidos.valorTotal > 200;
+===============================================//=========================================================
+SELECT COUNT(*)
+FROM pedidos;
+===============================================//=========================================================
+SELECT clientes.nome, COUNT(pedidos.idPedido) AS total_pedidos
+FROM clientes INNER JOIN pedidos ON clientes.idClientes = pedidos.idClientes
+GROUP BY clientes.nome
+===============================================//=========================================================
+SELECT clientes.nome, SUM(pedidos.valorTotal) AS valor_total
+FROM clientes INNER JOIN pedidos ON clientes.idClientes = pedidos.idClientes
+GROUP BY clientes.nome
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
