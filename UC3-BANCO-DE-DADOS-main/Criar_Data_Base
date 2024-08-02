@@ -229,9 +229,59 @@ SELECT clientes.nome, SUM(pedidos.valorTotal) AS valor_total
 FROM clientes INNER JOIN pedidos ON clientes.idClientes = pedidos.idClientes
 GROUP BY clientes.nome
 ===============================================//=========================================================
+///////CREATE TABLE departamentos (
+departamento_id INT AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR(50) NOT NULL
+);
 ===============================================//=========================================================
+CREATE TABLE empregados (
+empregados_id INT AUTO_INCREMENT PRIMARY KEY, 
+nome VARCHAR(50) NOT NULL,
+salario DECIMAL(10, 2) NOT NULL,
+departamento_id INT,
+FOREIGN KEY (departamento_id) REFERENCES departamentos
+(departamento_id)
+);
 ===============================================//=========================================================
+INSERT INTO departamentos (nome) VALUES
+('Vendas'),
+('Marketing'),
+('TI'),
+('Recursos Humanos');
 ===============================================//=========================================================
+INSERT INTO empregados (nome, salario, departamento_id) VALUES
+('Maicou Diécson', 5000.00, 1),
+('Neima Juniu', 6000.00, 1),
+('Cristiano Penaldo', 4000.00, 2),
+('Dalessandro', 5500.00, 3),
+('Mattos', 7000.00, 3),
+('Chicoins', 3000.00, 4),
+('Lionel Pessi', 4500.00, 2),
+('Biniciu Juniu', 3500.00, 1);
 ===============================================//=========================================================
+SELECT nome, salario
+FROM empregados
+WHERE salario > (SELECT AVG(salario) FROM empregados);
 ===============================================//=========================================================
+ALTER TABLE departamentos ADD localizacao VARCHAR(50);
 ===============================================//=========================================================
+UPDATE departamentos SET localizacao = 'São Paulo' WHERE nome = 'Vendas';
+UPDATE departamentos SET localizacao = 'Rio de Janeiro' WHERE nome = 'Marketing';
+UPDATE departamentos SET localizacao = 'São Paulo' WHERE nome = 'TI';
+UPDATE departamentos SET localizacao = 'Belo Horizonte' WHERE nome = 'Recursos Humanos';
+===============================================//=========================================================
+SELECT empregados.nome, departamentos.nome
+FROM empregados
+INNER JOIN departamentos
+ON empregados.departamento_id = departamentos.departamento_id;
+===============================================//=========================================================
+SELECT nome
+FROM empregados
+WHERE departamento_id IN(SELECT departamento_id FROM departamentos WHERE localizacao = 'São Paulo');
+===============================================//=========================================================
+SELECT salario FROM empregados WHERE departamento_id = 
+(SELECT departamento_id FROM departamentos WHERE nome = 'TI');
+===============================================//=========================================================
+SELECT nome, salario
+FROM empregados
+WHERE salario > ANY (SELECT salario FROM empregados WHERE departamento_id = (SELECT departamento_id FROM departamentos WHERE nome = 'TI'));
