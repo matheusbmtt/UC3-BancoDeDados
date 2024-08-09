@@ -285,3 +285,59 @@ SELECT salario FROM empregados WHERE departamento_id =
 SELECT nome, salario
 FROM empregados
 WHERE salario > ANY (SELECT salario FROM empregados WHERE departamento_id = (SELECT departamento_id FROM departamentos WHERE nome = 'TI'));
+===============================================//=========================================================
+SELECT nome, salario
+FROM empregados
+WHERE salario > ALL (SELECT salario FROM empregados WHERE departamento_id = 3);
+===============================================//=========================================================
+ALTER TABLE empregados ADD titulo VARCHAR(50);
+===============================================//=========================================================
+CREATE TABLE cargos (
+cargos_id INT AUTO_INCREMENT PRIMARY KEY,
+titulo VARCHAR(50) NOT NULL,
+departamento_id INT,
+salario DECIMAL(10, 2) NOT NULL,
+FOREIGN KEY (departamento_id) REFERENCES departamentos(departamento_id)
+);
+===============================================//=========================================================
+UPDATE empregados SET titulo = 'Gerente' WHERE nome = 'Maicou Diécson';
+UPDATE empregados SET titulo = 'Assistente' WHERE nome = 'Neima Juniu';
+UPDATE empregados SET titulo = 'Analista' WHERE nome = 'Cristiano Penaldo';
+UPDATE empregados SET titulo = 'Desenvolvedor' WHERE nome = 'Dalessandro';
+UPDATE empregados SET titulo = 'Engenheiro' WHERE nome = 'Mattos';
+UPDATE empregados SET titulo = 'Assistente' WHERE nome = 'Chicoins';
+UPDATE empregados SET titulo = 'Analista' WHERE nome = 'Lionel Pessi';
+UPDATE empregados SET titulo = 'Estagiário' WHERE nome = 'Biniciu Juniu';
+===============================================//=========================================================
+INSERT INTO cargos (titulo, departamento_id, salario) VALUES
+('Gerente', 1, 8000.00),
+('Assistente', 1, 4000.00),
+('Analista', 2, 4500.00),
+('Desenvolvedor', 3, 6000.00),
+('Engenheiro', 3, 7000.00),
+('Assistente', 4, 3500.00),
+('Analista', 2, 4600.00),
+('Estagiário', 1, 2000.00);
+===============================================//=========================================================
+SELECT departamentos.nome, AVG(cargos.salario)
+FROM empregados
+JOIN cargos ON empregados.departamento_id = cargos.departamento_id
+JOIN departamentos ON empregados.departamento_id = departamentos.departamento_id
+GROUP BY departamentos.nome
+HAVING AVG(cargos.salario) > 5000.00;
+===============================================//=========================================================
+
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
+===============================================//=========================================================
